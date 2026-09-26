@@ -1,0 +1,71 @@
+import logging
+import random
+from typing import List, Dict
+
+# إعداد السجلات (Logging) لاحترافية الكود
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[logging.StreamHandler()]
+)
+
+class AINetflixPlatform:
+    """
+    منصة ذكية لاقتراح وتوليد المحتوى السينمائي باستخدام خوارزميات الذكاء الاصطناعي.
+    """
+    def __init__(self, user_name: str):
+        self.user_name = user_name
+        self.catalog = {
+            "Sci-Fi": ["Cyber Odyssey 2077", "Neural Genesis", "Quantum Paradox"],
+            "Drama": ["The Algorithm of Heart", "Silicon Dreams", "Echoes of Tomorrow"],
+            "Thriller": ["Mind Heist", "Deep Fake", "The Cipher"]
+        }
+
+    def analyze_user_taste(self, favorite_genre: str) -> List[Dict[str, str]]:
+        logging.info(f"جاري تحليل تفضيلات المستخدم ({self.user_name}) في تصنيف: {favorite_genre}...")
+        
+        if favorite_genre not in self.catalog:
+            logging.warning(f"التصنيف '{favorite_genre}' غير متوفر، سيتم اختيار تصنيف افتراضي.")
+            favorite_genre = "Sci-Fi"
+            
+        movies = self.catalog[favorite_genre]
+        recommendations = []
+        
+        for movie in movies:
+            match_score = f"{random.randint(90, 99)}%"
+            recommendations.append({"title": movie, "genre": favorite_genre, "match": match_score})
+            
+        return recommendations
+
+    def generate_ai_synopsis(self, movie_title: str) -> str:
+        """
+        محاكاة نموذج توليد النصوص بالذكاء الاصطناعي (LLM) لابتكار ملخص فريد لكل فيلم.
+        """
+        synopses = [
+            f"ملخص بالذكاء الاصطناعي لـ '{movie_title}': رحلة ملحمية في عالم تتخذ فيه الخوارزميات قرارات مصير البشر.",
+            f"ملخص بالذكاء الاصطناعي لـ '{movie_title}': صراع محتدم بين الوعي البشري والشبكات العصبية الخارقة.",
+            f"ملخص بالذكاء الاصطناعي لـ '{movie_title}': استكشاف عميق لأبعاد المستقبل الرقمي والمشاعر الإصطناعية."
+        ]
+        return random.choice(synopses)
+
+if __name__ == "__main__":
+    print("=" * 60)
+    print("🚀 تشغيل نظام منصة الذكاء الاصطناعي السينمائية (AI-Netflix Core)")
+    print("=" * 60)
+    
+    current_user = "Atteib"
+    platform = AINetflixPlatform(current_user)
+    
+    # اختيار التصنيف المفضل للاختبار
+    chosen_genre = "Sci-Fi"
+    results = platform.analyze_user_taste(chosen_genre)
+    
+    print(f"\n🎬 الأفلام المقترحة خصيصاً للمستخدم: {current_user}\n" + "-" * 40)
+    for idx, item in enumerate(results, 1):
+        plot = platform.generate_ai_synopsis(item['title'])
+        print(f"{idx}. الفيلم: {item['title']}")
+        print(f"   - التصنيف: {item['genre']} | نسبة التوافق: {item['match']}")
+        print(f"   - القصة: {plot}\n")
+    
+    print("=" * 60)
+    print("✅ تم تنفيذ الكود بنجاح وجاهز للتوثيق والإضافة إلى المستودع.")
